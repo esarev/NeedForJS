@@ -1,0 +1,16 @@
+.hide {
+    display: none;
+}
+
+.game_start {
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;  
+}
+
+.car {
+    width: 100px;
+    height: 200px;
+    background: transparent url(./image/player.png) center / cover no-repeat;
+}
+
