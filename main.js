@@ -1,8 +1,8 @@
 'use strict';
 
 const score = document.querySelector('.score'),
-    startGame = document.querySelector('.game_start'),
-    areaGame = document.querySelector('.game_area'),
+    startGame = document.querySelector('.gameStart'),
+    areaGame = document.querySelector('.gameArea'),
     car = document.createElement('div');
 car.classList.add('car');
 

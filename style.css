@@ -1,16 +1,34 @@
+
 .hide {
     display: none;
 }
 
-.game_start {
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;  
+.gameStart {
+    width: 250px;
+    text-align: center;
+    color: #fff; /* цвет текста */
+    background: rgb(160, 155, 155); /* фон кнопки */
+    padding: .7em 1.5em; /* отступ от текста */
+    outline: none; /* убирать контур в Mozilla */
+    cursor: pointer;
 }
+.gameStart:hover { background: rgb(232,95,76); color: black; } /* при наведении курсора мышки */
+.gameStart:active { background: rgb(152,15,0); } /* при нажатии */
 
 .car {
     width: 100px;
     height: 200px;
     background: transparent url(./image/player.png) center / cover no-repeat;
+    position: absolute;
+    left: 250px;
+    bottom: 10px;
+}
+
+.gameArea {
+    width: 300px;
+    height: 100%;
+    position: relative;
+    margin: auto;
+    background: #222;
 }
 
