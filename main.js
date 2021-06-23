@@ -1,9 +1,16 @@
 'use strict';
 
+const MAX_ENEMY = 7;
+
 const score = document.querySelector('.score'),
     startGame = document.querySelector('.gameStart'),
     areaGame = document.querySelector('.gameArea'),
     car = document.createElement('div');
+
+const music = document.createElement('embet');
+
+music.src = 'Disturbed.mp3';
+
 car.classList.add('car');
 
 startGame.addEventListener('click', start);
@@ -28,7 +35,15 @@ function getQuantityElements(heightElement) {
     return document.documentElement.clientHeight / heightElement + 1;
 }
 
+const getRandomEnemy = (max) => Math.floor((Math.random() * max) + 1);
+
+
 function start() {
+    document.body.appened(music);
+
+    music.classList.add('visually-hidden');
+
+    areaGame.style.heightElement = 100 + '%';
     startGame.classList.add('hide');
     areaGame.classList.remove('hide');
     for (let i = 0; i < getQuantityElements(100); i++) {
@@ -45,7 +60,13 @@ function start() {
         enemy.y = -200 * setting.traffic * (i + 1);
         enemy.style.left = Math.floor(Math.random() * (areaGame.offsetWidth - 100)) + 'px';
         enemy.style.top = enemy.y + 'px';
-        enemy.style.background = 'transparent url(./image/enemy2.png) center / cover no-repeat';
+        enemy.style.background = `
+        transparent 
+        url(./image/enemy${getRandomEnemy(MAX_ENEMY)}.png) 
+        center / cover 
+        no-repeat
+        `;
+        
         areaGame.appendChild(enemy);
     }
 
@@ -81,13 +102,17 @@ function playGame() {
 }
 
 function startRun(e) {
-    e.preventDefault();
-    keys[e.key] = true;
+    if(keys.hasOwnProperty(e.key)){
+        e.preventDefault();
+        keys[e.key] = true;
+    }
 }
    
 function stopRun(e) {
-    e.preventDefault();
-    keys[e.key] = false;
+    if(keys.hasOwnProperty(e.key)){
+        e.preventDefault();
+        keys[e.key] = false;
+    }
 }
 
 function moveRoad() {
