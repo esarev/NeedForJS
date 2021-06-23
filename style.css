@@ -52,6 +52,7 @@ html, body {
 }
 
 .gameStart {
+    margin: 50vh auto;
     width: 250px;
     text-align: center;
     color: #fff; /* цвет текста */
@@ -59,6 +60,7 @@ html, body {
     padding: .7em 1.5em; /* отступ от текста */
     outline: none; /* убирать контур в Mozilla */
     cursor: pointer;
+    z-index: 5;
 }
 .gameStart:hover { background: rgb(232,95,76); color: black; } /* при наведении курсора мышки */
 .gameStart:active { background: rgb(152,15,0); } /* при нажатии */

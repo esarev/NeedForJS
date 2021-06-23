@@ -7,7 +7,7 @@ const score = document.querySelector('.score'),
     areaGame = document.querySelector('.gameArea'),
     car = document.createElement('div');
 
-const music = document.createElement('embet');
+const music = document.createElement('embed');
 
 music.src = 'Disturbed.mp3';
 
@@ -28,7 +28,7 @@ const setting = {
     start: false,
     score: 0,
     speed: 3,
-    traffic: 3
+    traffic: 2.5
 };
 
 function getQuantityElements(heightElement) {
@@ -43,9 +43,9 @@ function start() {
 
     music.classList.add('visually-hidden');
 
-    areaGame.style.heightElement = 100 + '%';
+    areaGame.style.height = 100 + '%';
     startGame.classList.add('hide');
-    // areaGame.classList.remove('hide');
+    areaGame.classList.remove('hide');
     for (let i = 0; i < getQuantityElements(100); i++) {
         const line = document.createElement('div');
         line.classList.add('line');
