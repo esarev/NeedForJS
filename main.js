@@ -45,7 +45,7 @@ function start() {
 
     areaGame.style.heightElement = 100 + '%';
     startGame.classList.add('hide');
-    areaGame.classList.remove('hide');
+    // areaGame.classList.remove('hide');
     for (let i = 0; i < getQuantityElements(100); i++) {
         const line = document.createElement('div');
         line.classList.add('line');
@@ -54,7 +54,7 @@ function start() {
         areaGame.appendChild(line);
     }
 
-    for(let i = 0; getQuantityElements(200 * setting.traffic); i++) {
+    for(let i = 0; i < getQuantityElements(100 * setting.traffic); i++) {
         const enemy = document.createElement('div');
         enemy.classList.add('enemy');
         enemy.y = -200 * setting.traffic * (i + 1);
@@ -78,9 +78,10 @@ function start() {
 }
 
 function playGame() {
-    moveRoad();
-    moveEnemy();
+    
     if(setting.start){
+        moveRoad();
+        moveEnemy();
         if(keys.ArrowLeft && setting.x > 0) {
             setting.x -= setting.speed;
         }
