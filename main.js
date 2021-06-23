@@ -39,7 +39,7 @@ const getRandomEnemy = (max) => Math.floor((Math.random() * max) + 1);
 
 
 function start() {
-    document.body.appened(music);
+    document.body.append(music);
 
     music.classList.add('visually-hidden');
 
