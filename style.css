@@ -1,3 +1,8 @@
+:root {
+    --height-elem: 200px
+}
+
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -44,6 +49,7 @@ table {
 
 html, body {
     height: 100%;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .hide {
@@ -51,33 +57,105 @@ html, body {
     
 }
 
+.game {
+    height: 100%;
+    padding-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.levels {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: calc(100px - 2rem);
+    width: 100%;
+    padding: 1rem;
+    box-shadow: 3px 3px 5px 1px #a19595;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+
+.btn {
+    font: inherit;
+    text-decoration: none;
+    display: inline-block;
+    width: 140px;
+    height: 45px;
+    line-height: 45px;
+    border: none;
+    border-radius: 45px;
+    margin: 10px 20px;
+    font-size: 11px;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 3px;
+    font-weight: 600;
+    color: #524f4e;
+    background: white;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+    transition: .3s;
+    cursor: pointer;
+}
+.btn:hover {
+    background: rgb(232,95,76);
+    box-shadow: 0 15px 15px rgb(152,15,0);
+    color: white;
+    transform: translateY(-7px);
+}
+.btn:disabled {
+    background-color: rgb(160, 155, 155);
+    color:#524f4e;
+    cursor: none;
+    
+}
+
+.score {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    box-shadow: -3px -3px 5px 1px #a19595;
+    height: calc(100px - 2rem);
+    padding: 1rem;
+}
+
 .gameStart {
-    margin: 50vh auto;
+    position: absolute;
     width: 250px;
     height: 50px;
     font-size: 25px;
     text-align: center;
     font-family: sans-serif;
+    border-radius: 45px;
     color: #fff; /* цвет текста */
     background: rgb(160, 155, 155); /* фон кнопки */
     padding: .7em 1.5em; /* отступ от текста */
     outline: none; /* убирать контур в Mozilla */
     cursor: pointer;
-    z-index: 5;
+    z-index: 200;
 }
 .gameStart:hover { background: rgb(232,95,76); color: black; } /* при наведении курсора мышки */
 .gameStart:active { background: rgb(152,15,0); } /* при нажатии */
 
 .car, .enemy {
-    width: 100px;
-    height: 200px;
-    background: transparent url(./image/player.png) center / cover no-repeat;
+    width: calc(var(--height-elem) / 2);
+    height: var(--height-elem);
+    background: transparent url(./image/player.png) center / contain no-repeat;
     position: absolute;
     /* left: 250px;
     bottom: 10px; */
 }
 
 .gameArea {
+    
     width: 600px;
     /* height: 100%; */
     position: relative;
@@ -89,7 +167,7 @@ html, body {
 .line {
     position: absolute;
     width: 10px;
-    height: 50px;
+    height: calc(var(--height-elem) / 2);
     background: #fff;
     left: 295px;
 }
@@ -103,19 +181,4 @@ html, body {
     height: 1px !important; 
     width: 1px !important; 
     overflow: hidden;
-}
-
-.score {
-    position: absolute;
-    top: 0;
-    left: 0;
-    /* width: 100%; */
-    background: black;
-    padding: .5rem 0;
-    z-index: 200;
-    font-size: 1.5rem;
-    color: skyblue;
-    text-align: center;
-    font-family: sans-serif;
-    font-weight: 500;
 }

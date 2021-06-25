@@ -1,21 +1,19 @@
 'use strict';
 
 const MAX_ENEMY = 7;
+const HEIGHT_ELEM = 150;
 
 const score = document.querySelector('.score'),
   startGame = document.querySelector('.gameStart'),
+  startLevel = document.querySelector('.levels'),
   areaGame = document.querySelector('.gameArea'),
-  car = document.createElement('div');
-
+  car = document.createElement('div'),
+  btns = document.querySelectorAll('.btn');
+  
 const music = document.createElement('embed');
 
 music.src = 'Disturbed.mp3';
-
 car.classList.add('car');
-
-startGame.addEventListener('click', start);
-document.addEventListener('keydown', startRun);
-document.addEventListener('keyup', stopRun);
 
 const keys = {
   ArrowUp: false,
@@ -27,68 +25,104 @@ const keys = {
 const setting = {
   start: false,
   score: 0,
-  speed: 5,
-  traffic: 2.5
+  traffic: 5,
+  speed: 3,
+};
+
+let startSpeed = 0;
+
+const changeLevel = (lvl) => {
+  
+  switch(lvl) {
+    case '1':
+      setting.traffic = 5;
+      setting.speed = 3;
+      break;
+    case '2':
+      setting.traffic = 4;
+      setting.speed = 6;
+      break;
+    case '3':
+      setting.traffic = 4;
+      setting.speed = 8;
+      break;
+  }
+
+  startSpeed = setting.speed;
 };
 
 function getQuantityElements(heightElement) {
-  return document.documentElement.clientHeight / heightElement + 1;
+  return (areaGame.offsetHeight / heightElement) + 1;
 }
 
 const getRandomEnemy = (max) => Math.floor((Math.random() * max) + 1);
 
 
-function start() {
+function start(event) {
+  const target = event.target;
+
+  // if(!target.classList.contains('btn')) return;
+
+  const levelGame = target.dataset.levelGame;
+  changeLevel(levelGame);
+
+  btns.forEach(btn => btn.disabled = true);
+  
   document.body.append(music);
 
   music.classList.add('visually-hidden');
-  
   score.style.width = 100 + '%';
-  areaGame.style.height = 100 + '%';
+  areaGame.style.height = Math.floor((document.documentElement.clientHeight - HEIGHT_ELEM) / HEIGHT_ELEM) * HEIGHT_ELEM;
   startGame.classList.add('hide');
+  startLevel.classList.add('hide');
   areaGame.innerHTML = '';
   areaGame.classList.remove('hide');
   car.style.left = '250px';
   car.style.top = 'auto';
   car.style.bottom = '10px';
-  score.style.top = 0;
-  for (let i = 0; i < getQuantityElements(100); i++) {
+  score.style.bottom = 0;
+  for (let i = 0; i < getQuantityElements(HEIGHT_ELEM); i++) {
     const line = document.createElement('div');
     line.classList.add('line');
-    line.style.top = (i * 100) + 'px';
-    line.y = i * 100;
-    areaGame.appendChild(line);
+    line.style.top = (i * HEIGHT_ELEM) + 'px';
+    line.style.height = (HEIGHT_ELEM / 2) + 'px';
+    line.y = i * HEIGHT_ELEM;
+    areaGame.append(line);
   }
 
-  for(let i = 0; i < getQuantityElements(100 * setting.traffic); i++) {
+  for(let i = 0; i < getQuantityElements(HEIGHT_ELEM * setting.traffic); i++) {
     const enemy = document.createElement('div');
     enemy.classList.add('enemy');
-    enemy.y = -200 * setting.traffic * (i + 1);
-    enemy.style.left = Math.floor(Math.random() * (areaGame.offsetWidth - 100)) + 'px';
+    enemy.y = -HEIGHT_ELEM * setting.traffic * (i + 1);
+    enemy.style.left = Math.floor(Math.random() * (areaGame.offsetWidth - HEIGHT_ELEM)) + 'px';
     enemy.style.top = enemy.y + 'px';
     enemy.style.background = `
     transparent 
     url(./image/enemy${getRandomEnemy(MAX_ENEMY)}.png) 
-    center / cover 
+    center / contain 
     no-repeat
     `;
     
-    areaGame.appendChild(enemy);
+    areaGame.append(enemy);
   }
   setting.score = 0;
   setting.start = true;
-  areaGame.appendChild(car);
+  areaGame.append(car);
   setting.x = car.offsetLeft;
   setting.y = car.offsetTop;
   requestAnimationFrame(playGame);
 }
 
 function playGame() {
-  setting.score += setting.speed;
-  score.innerHTML = 'SCORE<br>' + setting.score;
+  
   if(setting.start){
+    setting.score += setting.speed;
+    score.innerHTML = 'SCORE<br>' + setting.score;
     moveRoad();
     moveEnemy();
+
+    setting.speed = startSpeed + Math.floor(setting.score / 5000);
+
     if(keys.ArrowLeft && setting.x > 0) {
       setting.x -= setting.speed;
     }
@@ -129,8 +163,8 @@ function moveRoad() {
     line.y += setting.speed;
     line.style.top = line.y + 'px';
 
-    if(line.y >= document.documentElement.clientHeight){
-      line.y = -100; 
+    if(line.y >= areaGame.offsetHeight){
+      line.y = -HEIGHT_ELEM; 
     }
   });
 }
@@ -148,15 +182,21 @@ function moveEnemy() {
           setting.start = false;
           console.warn('ДТП');
           startGame.classList.remove('hide');
-          score.style.top = score.offsetHeight;
-          music.remove('embed'); 
+          // score.style.bottom = score.offsetHeight;
+          music.remove('embed');
+          btns.forEach(btn => btn.disabled = false); 
         }
       
     item.y += setting.speed / 2;
     item.style.top = item.y + 'px';
-    if(item.y >= document.documentElement.clientHeight){
-      item.y = -100 * setting.traffic;
-      item.style.left = Math.floor(Math.random() * (areaGame.offsetWidth - 100)) + 'px';
+    if(item.y >= areaGame.offsetHeight){
+      item.y = -HEIGHT_ELEM * setting.traffic;
+      item.style.left = Math.floor(Math.random() * (areaGame.offsetWidth - HEIGHT_ELEM)) + 'px';
     }
   });
 }
+
+startGame.addEventListener('click', start);
+startLevel.addEventListener('click', start);
+document.addEventListener('keydown', startRun);
+document.addEventListener('keyup', stopRun);
